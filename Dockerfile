@@ -12,3 +12,5 @@ RUN wget /tmp/gisgraphy.zip -O http://download.gisgraphy.com/releases/gisgraphy-
     cp -r /usr/local/gisgraphy/gisgraphy-5.0-beta3/* /usr/local/gisgraphy/ && \
     rm -rf /usr/local/gisgraphy/gisgraphy-5.0-beta3/* && \
     rm /tmp/gisgraphy.zip
+    
+RUN chmod a+rx /usr/local/gisgraphy/*.sh
