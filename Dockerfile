@@ -14,3 +14,5 @@ RUN wget /tmp/gisgraphy.zip -O http://download.gisgraphy.com/releases/gisgraphy-
     rm /tmp/gisgraphy.zip
     
 RUN chmod a+rx /usr/local/gisgraphy/*.sh
+
+RUN sed -i "s/password=/password=$PGPASSWORD/g" /usr/local/gisgraphy/webapps/ROOT/WEB-INF/classes/jdbc.properties
