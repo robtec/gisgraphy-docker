@@ -1,1 +1,12 @@
+version: '3'
 
+services:
+  mail:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gisgraphy
+    ports:
+      - 80:80
+    environment:
+      PGPASSWORD: mdppostgres
