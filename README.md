@@ -2,9 +2,18 @@
 
 Gisgraphy standalone in a Docker Container
 
+## Setup PostgreSQL
+
+The following docs outline how your PostgreSQL instance should be configured
+
+- https://www.gisgraphy.com/documentation/installation/setuplinux.php#steps
+
+Note changes required in `pg_hba.conf`
+
+Please see `entrypoint.sh` for SQL executed on first run, as per install doc
+
 ## Build the Image
 ```
-
 docker build -t gisgraphy-image .
 ```
 
