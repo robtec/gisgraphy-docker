@@ -1,22 +1,27 @@
 FROM debian:bullseye-slim
 
+ARG VERSION=5.0-beta3
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y && \
     apt-get install --no-install-recommends -y \
-    wget default-jdk htop net-tools vim psmisc unzip locales && \
+    wget default-jdk unzip gettext-base postgresql-client && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN wget /tmp/gisgraphy.zip -O http://download.gisgraphy.com/releases/gisgraphy-5.0-beta3.zip && \
+RUN wget -O /tmp/gisgraphy.zip http://download.gisgraphy.com/releases/gisgraphy-${VERSION}.zip && \
     unzip /tmp/gisgraphy.zip -d /usr/local/gisgraphy/ && \
-    cp -r /usr/local/gisgraphy/gisgraphy-5.0-beta3/* /usr/local/gisgraphy/ && \
-    rm -rf /usr/local/gisgraphy/gisgraphy-5.0-beta3/* && \
+    cp -r /usr/local/gisgraphy/gisgraphy-${VERSION}/* /usr/local/gisgraphy/ && \
+    rm -rf /usr/local/gisgraphy/gisgraphy-${VERSION}/* && \
     rm /tmp/gisgraphy.zip
     
 RUN chmod a+rx /usr/local/gisgraphy/*.sh
 
-RUN sed -i "s/password=/password=$PGPASSWORD/g" /usr/local/gisgraphy/webapps/ROOT/WEB-INF/classes/jdbc.properties
+WORKDIR /usr/local/gisgraphy/
+
+COPY ./files/jdbc.properties /usr/local/gisgraphy/jdbc.properties
 
 COPY entrypoint.sh .
 
 ENTRYPOINT ["./entrypoint.sh"]
+
+CMD ["bash","launch.sh"]
